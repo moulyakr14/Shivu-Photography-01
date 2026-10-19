@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="./contact.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+     <nav class="navbar">
+        <div class="left">
+            <img src="./asset/ShivuW.png" alt="">
+        </div>
+
+        <div class="right">
+            <ul class="links">
+                <li><a href="./home.html">HOME</a></li>
+                <li><a href="./gallery.html">GALLERY</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="contact">
+
+        <div class="contact-head">
+            <h1>If a frame stayed with you, say hello, book your story</h1>
+            <p>Tell me about your day, your idea or your project, and I’ll get back to you personally.</p>
+        </div>
+
+        <div class="contact-grid">
+
+            <div class="details">
+
+                <!-- WhatsApp: opens a chat with a ready message -->
+                <a class="wa-btn"
+                   href="https://wa.me/+919019116607?text=Hi%20Shivu%2C%20I%20found%20your%20website%20and%20would%20like%20to%20talk%20about%20a%20shoot."
+                   target="_blank" rel="noopener">CHAT ON WHATSAPP →</a>
+
+                <ul class="detail-list">
+                    <li>
+                        <span class="label">PHONE</span>
+                        <!-- opens the dial pad with this number -->
+                        <a href="tel:+919019116607">+91 9019116607</a>
+                    </li>
+                    <li>
+                        <span class="label">EMAIL</span>
+                        <!-- opens the mail app, addressed to this email -->
+                        <a href="https://mail.google.com/mail/?view=cm&to=moulyaveerashaiva@gmail.com&su=Enquiry%20from%20your%20website"
+                        target="_blank" rel="noopener">moulyaveerashaiva@gmail.com</a>
+                    </li>
+                    <li>
+                        <span class="label">INSTAGRAM</span>
+                        <a href="https://www.instagram.com/shivu_photography_01?igsh=MXF1ZDIxNDNrcm1hYQ%3D%3D" target="_blank" rel="noopener">@shivu_photography_01</a>
+                    </li>
+                    <li>
+                        <span class="label">LOCATION</span>
+                        <span class="value">Based in Bengaluru · Shivu Photography 01, 1st Cross, Nisarga Layout, HMT Layout, Mallathahalli, Bengaluru, Karnataka 560091</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12479.110648412205!2d77.48218647336341!3d12.96317728717012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3dfc8abe1401%3A0xe89c6f7e12df2df6!2sShivu%20Photography%2001!5e0!3m2!1sen!2sin!4v1792321096438!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+	const mail = document.querySelector('a[href^="mailto:"]');
+	const isPhone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+	if (mail && !isPhone) {
+		const address = mail.getAttribute('href').replace('mailto:', '').split('?')[0];
+		mail.href = 'https://mail.google.com/mail/?view=cm&to=' + address + '&su=Enquiry%20from%20your%20website';
+		mail.target = '_blank';
+		mail.rel = 'noopener';
+	}
+</script>
+
+        <footer class="footer">
+			<p>© 2026 Shivu Photography 01</p>
+		</footer>
+</body>
+</html>
