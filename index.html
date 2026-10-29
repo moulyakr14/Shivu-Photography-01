@@ -51,11 +51,32 @@
 				<p>Not what was there, but how it was seen</p>
 			</div>
 		</div>
-		<div class="swvid">
-			<video src="./asset/Rotation Carousal.mp4" autoplay muted loop>
-				<source src="./asset/video.mp4" type="video/mp4" />
-			</video>
-		</div>
+		<section class="coverflow">
+    		<div class="cf-stage" tabindex="0" aria-label="Photo carousel">
+        		<ul class="cf-cards">
+            		<li class="cf-card"><img src="./asset/SW1.jpg" alt="Wedding photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW2.jpg" alt="Portrait photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW3.jpg" alt="Maternity photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW4.jpg" alt="Family photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW5.jpg" alt="Event photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW6.jpg" alt="Fashion photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW7.jpg" alt="Candid photograph" loading="lazy"></li>
+            		<li class="cf-card"><img src="./asset/SW8.jpg" alt="Celebration photograph" loading="lazy"></li>
+					<li class="cf-card"><img src="./asset/SW9.jpg" alt="Celebration photograph" loading="lazy"></li>
+					<li class="cf-card"><img src="./asset/SW10.jpg" alt="Celebration photograph" loading="lazy"></li>
+					<li class="cf-card"><img src="./asset/SW11.jpg" alt="Celebration photograph" loading="lazy"></li>
+					<li class="cf-card"><img src="./asset/SW12.jpg" alt="Celebration photograph" loading="lazy"></li>
+					<li class="cf-card"><img src="./asset/SW13.jpg" alt="Celebration photograph" loading="lazy"></li>
+					<li class="cf-card"><img src="./asset/SW14.jpg" alt="Celebration photograph" loading="lazy"></li>
+        		</ul>
+    		</div>
+
+    		<div class="cf-controls">
+        		<button class="cf-btn" id="cfPrev" aria-label="Previous photo">← PREV</button>
+        		<button class="cf-btn" id="cfNext" aria-label="Next photo">NEXT →</button>
+    		</div>
+		</section>
+		
 		<div class="btn-row">
 			<a href="./gallery.html" class="gallery-btn"
 				>SEE HOW EVERYTHNG WAS SEEN →</a
@@ -93,5 +114,66 @@
 		<footer class="footer">
 			<p>© 2026 Shivu Photography 01</p>
 		</footer>
+
+		<script>
+(() => {
+	const stage = document.querySelector('.cf-stage');
+	const cards = [...document.querySelectorAll('.cf-card')];
+	const n = cards.length;
+	const reach = Math.min(3, Math.floor((n - 1) / 2));   /* how many cards show on each side */
+	let current = 0;
+
+	function render() {
+		cards.forEach((card, k) => {
+			let d = k - current;
+			if (d > n / 2) d -= n;                          /* loop: take the shortest way round */
+			if (d < -n / 2) d += n;
+
+			const wrapped = card._d !== undefined && Math.abs(d - card._d) > n / 2;
+			if (wrapped || card._d === undefined) card.style.transition = 'none';
+
+			card.style.setProperty('--o', d);
+			card.style.setProperty('--abs', Math.abs(d));
+			card.classList.toggle('is-far', Math.abs(d) > reach);
+			card.setAttribute('aria-hidden', d !== 0);
+
+			if (wrapped || card._d === undefined) {
+				card.offsetWidth;                           /* force a reflow so the jump is instant */
+				card.style.transition = '';
+			}
+			card._d = d;
+		});
+	}
+
+	const go = (step) => { current = (current + step + n) % n; render(); };
+
+	document.getElementById('cfNext').addEventListener('click', () => go(1));
+	document.getElementById('cfPrev').addEventListener('click', () => go(-1));
+
+	stage.addEventListener('keydown', (e) => {
+		if (e.key === 'ArrowRight') go(1);
+		if (e.key === 'ArrowLeft') go(-1);
+	});
+
+	let startX = null, moved = false;
+	stage.addEventListener('pointerdown', (e) => { startX = e.clientX; moved = false; });
+	stage.addEventListener('pointerup', (e) => {
+		if (startX === null) return;
+		const dx = e.clientX - startX;
+		startX = null;
+		if (Math.abs(dx) > 40) { moved = true; go(dx < 0 ? 1 : -1); }
+	});
+
+	cards.forEach((card, k) => {
+		card.addEventListener('click', () => {
+			if (moved) return;                              /* ignore the click that ends a swipe */
+			current = k;
+			render();
+		});
+	});
+
+	render();
+})();
+</script>
 	</body>
 </html>

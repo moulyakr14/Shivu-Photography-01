@@ -131,16 +131,71 @@ body {
 	line-height: 1.4;
 	margin-top: clamp(4px, 0.6vw, 10px);
 }
-.swvid {
+.coverflow {
+	--cw: clamp(130px, 24vw, 300px);          /* width of the centre card */
+	padding: var(--section-y) 0;
+	overflow: hidden;                          /* far cards never cause sideways scrolling */
+}
+.cf-stage {
+	position: relative;
+	height: calc(var(--cw) * 4 / 3 + 24px);
+	outline: none;
+	touch-action: pan-y;                       /* vertical scroll still works while swiping sideways */
+}
+.cf-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: var(--cw);
+	aspect-ratio: 3 / 4;
+	list-style: none;
+	border-radius: 10px;
+	overflow: hidden;
+	background: #212121;
+	cursor: pointer;
+	transform: translate(-50%, -50%)
+		translateX(calc(var(--o, 0) * 58%))     /* how far apart the cards sit */
+		scale(calc(1 - var(--abs, 0) * 0.16));  /* how much each step shrinks */
+	opacity: calc(1 - var(--abs, 0) * 0.25);
+	z-index: calc(10 - var(--abs, 0));
+	transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.6s ease;
+}
+.cf-card img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	pointer-events: none;                      /* stops the photo being dragged like a file */
+	user-select: none;
+}
+.cf-card.is-far {
+	opacity: 0;
+	pointer-events: none;
+}
+.cf-controls {
 	display: flex;
 	justify-content: center;
-	width: 90%;
-	margin: 0 auto;
+	gap: clamp(10px, 1.6vw, 24px);
+	margin-top: clamp(12px, 2vw, 28px);
 }
-.swvid video {
-	display: block;
-	width: min(80%, 1250px);
-	height: auto;
+.cf-btn {
+	font-family: "Montserrat", sans-serif;
+	font-size: clamp(10px, 0.9vw, 14px);
+	font-weight: 500;
+	letter-spacing: 0.12em;
+	color: #212121;
+	background: transparent;
+	border: 1px solid #c6a76a;
+	padding: clamp(8px, 0.9vw, 14px) clamp(14px, 1.8vw, 30px);
+	cursor: pointer;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+.cf-btn:hover {
+	background: #c6a76a;
+	color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+	.cf-card { transition: none; }
 }
 .gallery-btn {
 	flex: 0 0 auto;
@@ -224,7 +279,6 @@ body {
 	padding: 0 var(--side);
 	z-index: 100;
 }
-
 .footer p {
 	font-family: "Montserrat", sans-serif;
 	font-size: clamp(9px, 0.8vw, 12px);
