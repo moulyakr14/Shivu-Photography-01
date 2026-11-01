@@ -132,15 +132,15 @@ body {
 	margin-top: clamp(4px, 0.6vw, 10px);
 }
 .coverflow {
-	--cw: clamp(130px, 24vw, 300px);          /* width of the centre card */
+	--cw: clamp(130px, 24vw, 300px); /* width of the centre card */
 	padding: var(--section-y) 0;
-	overflow: hidden;                          /* far cards never cause sideways scrolling */
+	overflow: hidden; /* far cards never cause sideways scrolling */
 }
 .cf-stage {
 	position: relative;
 	height: calc(var(--cw) * 4 / 3 + 24px);
 	outline: none;
-	touch-action: pan-y;                       /* vertical scroll still works while swiping sideways */
+	touch-action: pan-y; /* vertical scroll still works while swiping sideways */
 }
 .cf-card {
 	position: absolute;
@@ -153,19 +153,20 @@ body {
 	overflow: hidden;
 	background: #212121;
 	cursor: pointer;
-	transform: translate(-50%, -50%)
-		translateX(calc(var(--o, 0) * 58%))     /* how far apart the cards sit */
-		scale(calc(1 - var(--abs, 0) * 0.16));  /* how much each step shrinks */
+	transform: translate(-50%, -50%) translateX(calc(var(--o, 0) * 58%))
+		/* how far apart the cards sit */ scale(calc(1 - var(--abs, 0) * 0.16)); /* how much each step shrinks */
 	opacity: calc(1 - var(--abs, 0) * 0.25);
 	z-index: calc(10 - var(--abs, 0));
-	transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.6s ease;
+	transition:
+		transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1),
+		opacity 0.6s ease;
 }
 .cf-card img {
 	display: block;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	pointer-events: none;                      /* stops the photo being dragged like a file */
+	pointer-events: none; /* stops the photo being dragged like a file */
 	user-select: none;
 }
 .cf-card.is-far {
@@ -188,14 +189,29 @@ body {
 	border: 1px solid #c6a76a;
 	padding: clamp(8px, 0.9vw, 14px) clamp(14px, 1.8vw, 30px);
 	cursor: pointer;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 }
 .cf-btn:hover {
 	background: #c6a76a;
 	color: #fff;
 }
 @media (prefers-reduced-motion: reduce) {
-	.cf-card { transition: none; }
+	.cf-card {
+		transition: none;
+	}
+}
+@media (max-width: 600px) {
+	.coverflow {
+		--cw: 60vw; /* big centre photo on phones */
+	}
+
+	.cf-card {
+		transform: translate(-50%, -50%) translateX(calc(var(--o, 0) * 68%))
+			scale(calc(1 - var(--abs, 0) * 0.14));
+		opacity: calc(1 - var(--abs, 0) * 0.35);
+	}
 }
 .gallery-btn {
 	flex: 0 0 auto;
@@ -210,7 +226,9 @@ body {
 	background: transparent;
 	border: 1px solid #c6a76a;
 	padding: clamp(8px, 0.9vw, 14px) clamp(14px, 1.8vw, 32px);
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 }
 .gallery-btn:hover {
 	background-color: #c6a76a;
