@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Wedding</title>
+		<link rel="stylesheet" href="./wedding.css" />
+	</head>
+	<body>
+		<div>
+			<div class="lb-grid">
+				<a
+					class="lb-link"
+					href="./asset/wedding1-large.jpg"
+					data-caption="Wedding"
+				>
+					<img
+						src="./asset/SW8.jpg"
+						alt="Wedding photograph"
+						loading="lazy"
+					/>
+				</a>
+
+				<a
+					class="lb-link"
+					href="./asset/portrait1-large.jpg"
+					data-caption="Portrait"
+				>
+					<img
+						src="./asset/SW13.jpg"
+						alt="Portrait photograph"
+						loading="lazy"
+					/>
+				</a>
+
+				<a
+					class="lb-link"
+					href="./asset/film1.mp4"
+					data-type="video"
+					data-caption="Cinematic film"
+				>
+					<img
+						src="./asset/film1-poster.jpg"
+						alt="Cinematic film"
+						loading="lazy"
+					/>
+				</a>
+			</div>
+		</div>
+
+		<div
+			class="lightbox"
+			id="lightbox"
+			role="dialog"
+			aria-modal="true"
+			aria-label="Photo viewer"
+			aria-hidden="true"
+		>
+			<button class="lb-btn lb-close" aria-label="Close">×</button>
+			<button class="lb-btn lb-prev" aria-label="Previous">‹</button>
+			<button class="lb-btn lb-next" aria-label="Next">›</button>
+
+			<figure class="lb-stage">
+				<div class="lb-media"></div>
+				<figcaption>
+					<span class="lb-caption"></span>
+					<span class="lb-count"></span>
+				</figcaption>
+			</figure>
+		</div>
+		<script src="./wedding.js"></script>
+	</body>
+</html>
