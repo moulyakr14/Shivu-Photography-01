@@ -7,7 +7,7 @@
 	--nav-h: clamp(70px, 15vh, 165px);
 	--side: clamp(12px, 4.5vw, 90px);
 	--section-y: clamp(40px, 6vw, 100px);
-	--footer-h: clamp(36px, 2.8vw, 52px);
+	--footer-h: clamp(36px, 2vw, 52px);
 }
 body {
 	background-color: #fff;

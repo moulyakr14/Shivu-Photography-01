@@ -52,26 +52,110 @@
 			</div>
 		</div>
 		<section class="coverflow">
-    		<div class="cf-stage" tabindex="0" aria-label="Photo carousel">
-        		<ul class="cf-cards">
-            		<li class="cf-card"><img src="./asset/SW1.jpg" alt="Wedding photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW2.jpg" alt="Portrait photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW3.jpg" alt="Maternity photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW4.jpg" alt="Family photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW5.jpg" alt="Event photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW6.jpg" alt="Fashion photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW7.jpg" alt="Candid photograph" loading="lazy"></li>
-            		<li class="cf-card"><img src="./asset/SW8.jpg" alt="Celebration photograph" loading="lazy"></li>
-					<li class="cf-card"><img src="./asset/SW9.jpg" alt="Celebration photograph" loading="lazy"></li>
-					<li class="cf-card"><img src="./asset/SW10.jpg" alt="Celebration photograph" loading="lazy"></li>
-					<li class="cf-card"><img src="./asset/SW11.jpg" alt="Celebration photograph" loading="lazy"></li>
-					<li class="cf-card"><img src="./asset/SW12.jpg" alt="Celebration photograph" loading="lazy"></li>
-					<li class="cf-card"><img src="./asset/SW13.jpg" alt="Celebration photograph" loading="lazy"></li>
-					<li class="cf-card"><img src="./asset/SW14.jpg" alt="Celebration photograph" loading="lazy"></li>
-        		</ul>
-    		</div>
+			<div class="cf-stage" tabindex="0" aria-label="Photo carousel">
+				<ul class="cf-cards">
+					<li class="cf-card">
+						<img
+							src="./asset/SW1.jpg"
+							alt="Wedding photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW2.jpg"
+							alt="Portrait photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW3.jpg"
+							alt="Maternity photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW4.jpg"
+							alt="Family photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW5.jpg"
+							alt="Event photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW6.jpg"
+							alt="Fashion photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW7.jpg"
+							alt="Candid photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW8.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW9.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW10.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW11.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW12.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW13.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+					<li class="cf-card">
+						<img
+							src="./asset/SW14.jpg"
+							alt="Celebration photograph"
+							loading="lazy"
+						/>
+					</li>
+				</ul>
+			</div>
 		</section>
-		
+
 		<div class="btn-row">
 			<a href="./gallery.html" class="gallery-btn"
 				>SEE HOW EVERYTHNG WAS SEEN →</a
@@ -111,96 +195,125 @@
 		</footer>
 
 		<script>
-(() => {
-	const stage = document.querySelector('.cf-stage');
-	const cards = [...document.querySelectorAll('.cf-card')];
-	const n = cards.length;
-	const phone = window.matchMedia('(max-width: 600px)');
-	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-	const getReach = () => Math.min(phone.matches ? 1 : 3, Math.floor((n - 1) / 2));
-	const DELAY = 3000;                                   /* time between slides, in milliseconds */
-	let current = 0;
-	let timer = null;
-	let onScreen = true;
+			(() => {
+				const stage = document.querySelector(".cf-stage");
+				const cards = [...document.querySelectorAll(".cf-card")];
+				const n = cards.length;
+				const phone = window.matchMedia("(max-width: 600px)");
+				const reduceMotion = window.matchMedia(
+					"(prefers-reduced-motion: reduce)",
+				);
+				const getReach = () =>
+					Math.min(phone.matches ? 1 : 3, Math.floor((n - 1) / 2));
+				const DELAY = 2800; /* time between slides, in milliseconds */
+				let current = 0;
+				let timer = null;
+				let onScreen = true;
 
-	function render() {
-		const reach = getReach();
-		cards.forEach((card, k) => {
-			let d = k - current;
-			if (d > n / 2) d -= n;
-			if (d < -n / 2) d += n;
+				function render() {
+					const reach = getReach();
+					cards.forEach((card, k) => {
+						let d = k - current;
+						if (d > n / 2) d -= n;
+						if (d < -n / 2) d += n;
 
-			const wrapped = card._d !== undefined && Math.abs(d - card._d) > n / 2;
-			if (wrapped || card._d === undefined) card.style.transition = 'none';
+						const wrapped =
+							card._d !== undefined &&
+							Math.abs(d - card._d) > n / 2;
+						if (wrapped || card._d === undefined)
+							card.style.transition = "none";
 
-			card.style.setProperty('--o', d);
-			card.style.setProperty('--abs', Math.abs(d));
-			card.classList.toggle('is-far', Math.abs(d) > reach);
-			card.setAttribute('aria-hidden', d !== 0);
+						card.style.setProperty("--o", d);
+						card.style.setProperty("--abs", Math.abs(d));
+						card.classList.toggle("is-far", Math.abs(d) > reach);
+						card.setAttribute("aria-hidden", d !== 0);
 
-			if (wrapped || card._d === undefined) {
-				card.offsetWidth;
-				card.style.transition = '';
-			}
-			card._d = d;
-		});
-	}
+						if (wrapped || card._d === undefined) {
+							card.offsetWidth;
+							card.style.transition = "";
+						}
+						card._d = d;
+					});
+				}
 
-	const go = (step) => { current = (current + step + n) % n; render(); };
+				const go = (step) => {
+					current = (current + step + n) % n;
+					render();
+				};
 
-	/* ---------- autoplay ---------- */
-	const stop = () => { clearInterval(timer); timer = null; };
-	const start = () => {
-		stop();
-		if (reduceMotion.matches || !onScreen) return;
-		timer = setInterval(() => go(1), DELAY);
-	};
+				/* ---------- autoplay ---------- */
+				const stop = () => {
+					clearInterval(timer);
+					timer = null;
+				};
+				const start = () => {
+					stop();
+					if (reduceMotion.matches || !onScreen) return;
+					timer = setInterval(() => go(1), DELAY);
+				};
 
-	/* pause while the mouse is over it (only on devices that have a mouse) */
-	if (window.matchMedia('(hover: hover)').matches) {
-		stage.addEventListener('mouseenter', stop);
-		stage.addEventListener('mouseleave', start);
-	}
+				/* pause while the mouse is over it (only on devices that have a mouse) */
+				if (window.matchMedia("(hover: hover)").matches) {
+					stage.addEventListener("mouseenter", stop);
+					stage.addEventListener("mouseleave", start);
+				}
 
-	/* pause when the carousel is scrolled off screen or the tab is hidden */
-	new IntersectionObserver((entries) => {
-		onScreen = entries[0].isIntersecting;
-		onScreen ? start() : stop();
-	}, { threshold: 0.3 }).observe(stage);
+				/* pause when the carousel is scrolled off screen or the tab is hidden */
+				new IntersectionObserver(
+					(entries) => {
+						onScreen = entries[0].isIntersecting;
+						onScreen ? start() : stop();
+					},
+					{ threshold: 0.3 },
+				).observe(stage);
 
-	document.addEventListener('visibilitychange', () => {
-		document.hidden ? stop() : start();
-	});
+				document.addEventListener("visibilitychange", () => {
+					document.hidden ? stop() : start();
+				});
 
-	/* ---------- manual controls ---------- */
-	stage.addEventListener('keydown', (e) => {
-		if (e.key === 'ArrowRight') { go(1); start(); }
-		if (e.key === 'ArrowLeft') { go(-1); start(); }
-	});
+				/* ---------- manual controls ---------- */
+				stage.addEventListener("keydown", (e) => {
+					if (e.key === "ArrowRight") {
+						go(1);
+						start();
+					}
+					if (e.key === "ArrowLeft") {
+						go(-1);
+						start();
+					}
+				});
 
-	let startX = null, moved = false;
-	stage.addEventListener('pointerdown', (e) => { startX = e.clientX; moved = false; stop(); });
-	stage.addEventListener('pointerup', (e) => {
-		if (startX === null) return;
-		const dx = e.clientX - startX;
-		startX = null;
-		if (Math.abs(dx) > 40) { moved = true; go(dx < 0 ? 1 : -1); }
-		start();                                          /* a fresh 3 seconds after a swipe */
-	});
+				let startX = null,
+					moved = false;
+				stage.addEventListener("pointerdown", (e) => {
+					startX = e.clientX;
+					moved = false;
+					stop();
+				});
+				stage.addEventListener("pointerup", (e) => {
+					if (startX === null) return;
+					const dx = e.clientX - startX;
+					startX = null;
+					if (Math.abs(dx) > 40) {
+						moved = true;
+						go(dx < 0 ? 1 : -1);
+					}
+					start(); /* a fresh 3 seconds after a swipe */
+				});
 
-	cards.forEach((card, k) => {
-		card.addEventListener('click', () => {
-			if (moved) return;
-			current = k;
-			render();
-			start();
-		});
-	});
+				cards.forEach((card, k) => {
+					card.addEventListener("click", () => {
+						if (moved) return;
+						current = k;
+						render();
+						start();
+					});
+				});
 
-	phone.addEventListener('change', render);
-	render();
-	start();
-})();
-</script>
+				phone.addEventListener("change", render);
+				render();
+				start();
+			})();
+		</script>
 	</body>
 </html>
