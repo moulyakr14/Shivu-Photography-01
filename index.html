@@ -70,11 +70,6 @@
 					<li class="cf-card"><img src="./asset/SW14.jpg" alt="Celebration photograph" loading="lazy"></li>
         		</ul>
     		</div>
-
-    		<div class="cf-controls">
-        		<button class="cf-btn" id="cfPrev" aria-label="Previous photo">← PREV</button>
-        		<button class="cf-btn" id="cfNext" aria-label="Next photo">NEXT →</button>
-    		</div>
 		</section>
 		
 		<div class="btn-row">
@@ -121,14 +116,18 @@
 	const cards = [...document.querySelectorAll('.cf-card')];
 	const n = cards.length;
 	const phone = window.matchMedia('(max-width: 600px)');
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const getReach = () => Math.min(phone.matches ? 1 : 3, Math.floor((n - 1) / 2));
+	const DELAY = 3000;                                   /* time between slides, in milliseconds */
 	let current = 0;
+	let timer = null;
+	let onScreen = true;
 
 	function render() {
 		const reach = getReach();
 		cards.forEach((card, k) => {
 			let d = k - current;
-			if (d > n / 2) d -= n;                          /* loop: take the shortest way round */
+			if (d > n / 2) d -= n;
 			if (d < -n / 2) d += n;
 
 			const wrapped = card._d !== undefined && Math.abs(d - card._d) > n / 2;
@@ -140,7 +139,7 @@
 			card.setAttribute('aria-hidden', d !== 0);
 
 			if (wrapped || card._d === undefined) {
-				card.offsetWidth;                           /* force a reflow so the jump is instant */
+				card.offsetWidth;
 				card.style.transition = '';
 			}
 			card._d = d;
@@ -149,34 +148,58 @@
 
 	const go = (step) => { current = (current + step + n) % n; render(); };
 
-	document.getElementById('cfNext').addEventListener('click', () => go(1));
-	document.getElementById('cfPrev').addEventListener('click', () => go(-1));
+	/* ---------- autoplay ---------- */
+	const stop = () => { clearInterval(timer); timer = null; };
+	const start = () => {
+		stop();
+		if (reduceMotion.matches || !onScreen) return;
+		timer = setInterval(() => go(1), DELAY);
+	};
 
+	/* pause while the mouse is over it (only on devices that have a mouse) */
+	if (window.matchMedia('(hover: hover)').matches) {
+		stage.addEventListener('mouseenter', stop);
+		stage.addEventListener('mouseleave', start);
+	}
+
+	/* pause when the carousel is scrolled off screen or the tab is hidden */
+	new IntersectionObserver((entries) => {
+		onScreen = entries[0].isIntersecting;
+		onScreen ? start() : stop();
+	}, { threshold: 0.3 }).observe(stage);
+
+	document.addEventListener('visibilitychange', () => {
+		document.hidden ? stop() : start();
+	});
+
+	/* ---------- manual controls ---------- */
 	stage.addEventListener('keydown', (e) => {
-		if (e.key === 'ArrowRight') go(1);
-		if (e.key === 'ArrowLeft') go(-1);
+		if (e.key === 'ArrowRight') { go(1); start(); }
+		if (e.key === 'ArrowLeft') { go(-1); start(); }
 	});
 
 	let startX = null, moved = false;
-	stage.addEventListener('pointerdown', (e) => { startX = e.clientX; moved = false; });
+	stage.addEventListener('pointerdown', (e) => { startX = e.clientX; moved = false; stop(); });
 	stage.addEventListener('pointerup', (e) => {
 		if (startX === null) return;
 		const dx = e.clientX - startX;
 		startX = null;
 		if (Math.abs(dx) > 40) { moved = true; go(dx < 0 ? 1 : -1); }
+		start();                                          /* a fresh 3 seconds after a swipe */
 	});
 
 	cards.forEach((card, k) => {
 		card.addEventListener('click', () => {
-			if (moved) return;                              /* ignore the click that ends a swipe */
+			if (moved) return;
 			current = k;
 			render();
-			const reach = getReach();
+			start();
 		});
 	});
 
-	render();
 	phone.addEventListener('change', render);
+	render();
+	start();
 })();
 </script>
 	</body>
