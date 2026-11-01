@@ -204,7 +204,7 @@ body {
 }
 @media (max-width: 600px) {
 	.coverflow {
-		--cw: 60vw; /* big centre photo on phones */
+		--cw: 100vw; /* big centre photo on phones */
 	}
 
 	.cf-card {
